@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Horizons Algeria - الوجهات</title>
+  <link rel="icon" href="logoS.png" type="image/png" />
+  <style>
+    :root {
+      --logo-blue: #50A1CD;
+      --logo-orange: #f7921e;
+      --text-dark: #333;
+      --text-light: #fff;
+      --background-dark: #101827;
+      --text-dark-mode: #e0e0e0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    body.dark-mode { color: var(--text-dark-mode); }
+
+    .gradient-bg {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+      background-size: 400% 400%;
+      animation: gradient-animation 4s ease infinite;
+    }
+
+    body.dark-mode .gradient-bg {
+      background-image: linear-gradient(135deg, #040a17, #081839, #030e24);
+    }
+
+    body:not(.dark-mode) .gradient-bg {
+      background-image: linear-gradient(135deg, #e4e4e4, #ffffff, #c1c1c1);
+    }
+
+    @keyframes gradient-animation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header, footer {
+      background: linear-gradient(to right, #50A1CD 180px, #2C4C8D 80%, #1A3D7C);
+      color: var(--text-light);
+      padding: 15px 5%;
+      position: relative;
+      z-index: 3;
+    }
+
+    body.dark-mode header, body.dark-mode footer {
+      background: linear-gradient(to right, #50A1CD 180px, #162B4B 80%, #0e1f33);
+    }
+
+    .header-container, .footer-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .footer-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-links-wrapper {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    html[dir="rtl"] .footer-links-wrapper { flex-direction: row-reverse; }
+    html[dir="ltr"] .footer-links-wrapper { flex-direction: row; }
+
+    .logo {
+      height: 100px;
+      max-width: 180px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover { transform: scale(1.05); }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    html[dir="rtl"] .logo { order: 2; }
+    html[dir="rtl"] nav { order: 1; }
+    html[dir="ltr"] .logo { order: 1; }
+    html[dir="ltr"] nav { order: 2; }
+
+    nav a, .footer-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover, .footer-link:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    nav a.active::after, .footer-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--logo-orange);
+      border-radius: 2px;
+    }
+
+    #mode-toggle, #lang-toggle {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 10px 20px;
+      border-radius: 6px;
+      line-height: 1.5;
+      transition: all 0.3s ease;
+    }
+
+    #mode-toggle:hover, #lang-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .copyright {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+      opacity: 0.75;
+      direction: ltr;
+      color: var(--text-light);
+    }
+
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+      padding: 5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .destinations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      flex-direction: row;
+      direction: ltr;
+    }
+
+    .left-column, .right-column {
+      flex: 1 1 48%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-column { order: 1; margin-top: 4rem; }
+    .left-column { order: 2; }
+
+    .dest-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      width: 98.5%;
+      min-height: 140px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      animation: fadeInUp 1s ease-in-out forwards;
+    }
+
+    body.dark-mode .dest-card {
+      background: rgba(16, 24, 39, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .dest-card.right { border-inline-start: 3px solid var(--logo-orange); margin-inline-end: auto; }
+    .dest-card.left  { border-inline-end: 3px solid var(--logo-orange); margin-inline-start: auto; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    html[dir="rtl"] .card-header { flex-direction: row-reverse; }
+    html[dir="ltr"] .card-header { flex-direction: row; }
+
+   .card-toggle-icon {
+  font-size: 0.5rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+html[dir="rtl"] .card-header {
+  flex-direction: row-reverse;
+}
+html[dir="rtl"] .card-toggle-icon {
+  margin-inline-end: auto;
+}
+
+html[dir="ltr"] .card-header {
+  flex-direction: row;
+}
+html[dir="ltr"] .card-toggle-icon {
+  margin-inline-start: auto;
+}
+
+
+    .card-header img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--logo-orange);
+    }
+
+     .card-header img:hover {
+  transform: scale(1.05);
+     }
+
+    .card-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.6s ease, opacity 0.4s ease;
+    }
+
+    .card-content.expanded {
+      opacity: 1;
+      margin-top: 1rem;
+    }
+
+    .card-content p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+    
+
+    .france-card.open .card-content { background-image: url("france.png"); }
+    .germany-card.open .card-content { background-image: url("germany.png"); }
+    .italy-card.open .card-content { background-image: url("italy.png"); }
+    .turkey-card.open .card-content { background-image: url("turkey.png"); }
+    .russia-card.open .card-content { background-image: url("russia.png"); }
+    .china-card.open .card-content { background-image: url("china.png"); }
+
+    .france-card.open .card-content,
+    .germany-card.open .card-content,
+    .italy-card.open .card-content,
+    .turkey-card.open .card-content,
+    .russia-card.open .card-content,
+    .china-card.open .card-content {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 80%;
+      background-blend-mode: luminosity;
+    }
+
+    body.dark-mode .card-content.open { filter: brightness(1.1) contrast(1.2); }
+    body:not(.dark-mode) .card-content.open { filter: brightness(0.85); }
+ 
+    .card-content ul {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  padding-inline-start: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+html[dir="rtl"] .card-content ul {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="ltr"] .card-content ul {
+  direction: ltr;
+  text-align: left;
+}
+
+.dest-card.open .card-toggle-icon {
+  transform: rotate(180deg);
+}
+
+
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="gradient-bg"></div>
+  <header>
+    <div class="header-container">
+      <img src="logoXS.png" alt="Study Horizons Algeria Logo" class="logo">
+      <nav>
+        <a href="index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+        <a href="destinations.html" class="active" data-ar="الوجهات" data-en="Destinations">الوجهات</a>
+        <a href="recommendations.html" data-ar="التوصيات" data-en="Recommendations">التوصيات</a>
+        <a href="contact.html" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</a>
+        <button id="lang-toggle">EN</button>
+        <button id="mode-toggle">☀️</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+  <div class="destinations-grid">
+    <div class="left-column">
+    <div class="dest-card left france-card">
+  <div class="card-header">
+    <img src="FR.png" alt="France Flag">
+    <span data-ar="فرنسا" data-en="France">فرنسا</span>
+    <span class="card-toggle-icon">▼</span>
+  </div>
+  <div class="card-content lang-section">
+    <ul class="bullet-list">
+      <li>
+        <strong data-ar="📘 كيفية التقديم إلى الجامعات" data-en="📘 How to Apply to Universities"></strong>
+        <ul>
+          <li data-ar="التسجيل عبر منصة Études en France (DAP)." data-en="Register on the Études en France platform (DAP stage)."></li>
+          <li data-ar="تحميل شهادة البكالوريا بمعدل لا يقل عن 12/20." data-en="Upload your Baccalauréat diploma with a minimum average of 12/20."></li>
+          <li data-ar="تقديم شهادة اللغة الفرنسية DELF أو TCF مستوى B2." data-en="Provide French language certificate (DELF or TCF, B2 level)."></li>
+          <li data-ar="سيرة ذاتية محدثة + رسالة دافع باللغة الفرنسية." data-en="Updated CV + motivation letter in French."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="📝 المقابلة مع Campus France" data-en="📝 Campus France Interview"></strong>
+        <ul>
+          <li data-ar="بعد إرسال الملف، احجز موعدًا للمقابلة في الجزائر." data-en="After submitting your file, book an interview in Algeria."></li>
+          <li data-ar="المقابلة قصيرة (5–15 دقيقة) لتقييم مشروعك الدراسي واللغوي." data-en="Interview lasts 5–15 minutes to evaluate your academic and language plans."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="🛂 ملف التأشيرة" data-en="🛂 Visa Folder"></strong>
+        <ul>
+          <li data-ar="جواز سفر ساري لمدة لا تقل عن 3 أشهر بعد العودة." data-en="Valid passport (at least 3 months beyond return date)."></li>
+          <li data-ar="صورتان شمسيتان بمعايير رسمية." data-en="Two official ID photos."></li>
+          <li data-ar="خطاب القبول من الجامعة." data-en="University admission letter."></li>
+          <li data-ar="إثبات السكن (عقد إيجار أو حجز مؤكد)." data-en="Proof of accommodation (rental contract or reservation)."></li>
+         <li data-ar="حساب بنكي يحتوي على 7,380 يورو سنويًا و دعم مالي من كفيل أو أحد أفراد العائلة." data-en="Bank account with €7,380/year and financial support from a sponsor or family member."></li>
+          <li data-ar="تأمين صحي دولي." data-en="International health insurance."></li>
+          <li data-ar="حجز تذكرة طيران ذهابًا وإيابًا." data-en="Round-trip flight reservation."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💶 تكاليف المعيشة" data-en="💶 Living Costs"></strong>
+        <ul>
+          <li data-ar="باريس: 1,000–1,200 € شهريًا." data-en="Paris: €1,000–1,200/month."></li>
+          <li data-ar="ليون / تولوز / غرونوبل: 700–900 € شهريًا." data-en="Lyon / Toulouse / Grenoble: €700–900/month."></li>
+          <li data-ar="تشمل: السكن، الطعام، النقل، التأمين، الكتب." data-en="Covers: housing, food, transport, insurance, books."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💡 نصائح لك" data-en="💡Tips for You"></strong>
+        <ul>
+          <li data-ar="قدّم مبكرًا (من نوفمبر إلى ديسمبر)." data-en="Apply early (between November and December)."></li>
+          <li data-ar="ترجم مستنداتك ترجمة رسمية للفرنسية." data-en="Translate your documents officially into French."></li>
+          <li data-ar="تابع بريدك بانتظام للردود والمواعيد." data-en="Check your email regularly for responses and updates."></li>
+          <li data-ar="لا تتردد في طرح الأسئلة على Campus France." data-en="Don’t hesitate to ask Campus France any questions."></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+      <div class="dest-card left italy-card">
+  <div class="card-header">
+    <img src="IT.png" alt="Italy Flag">
+    <span data-ar="إيطاليا" data-en="Italy">إيطاليا</span>
+    <span class="card-toggle-icon">▼</span>
+  </div>
+  <div class="card-content lang-section">
+    <ul class="bullet-list">
+      <li>
+        <strong data-ar="📘 كيفية التقديم إلى الجامعات" data-en="📘 How to Apply to Universities"></strong>
+        <ul>
+          <li data-ar="التسجيل عبر بوابة Universitaly أو موقع الجامعة." data-en="Apply via Universitaly portal or the university website."></li>
+          <li data-ar="رفع شهادة البكالوريا، كشف النقاط، سيرة ذاتية، ورسالة دافع." data-en="Upload diploma, transcripts, CV, and motivation letter."></li>
+          <li data-ar="تقديم شهادة لغة إيطالية (CILS/CELI) أو إنجليزية (IELTS/TOEFL) حسب البرنامج." data-en="Submit Italian (CILS/CELI) or English (IELTS/TOEFL) language proof."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="📝 المقابلة والمتابعة" data-en="📝 Interview & Follow-up"></strong>
+        <ul>
+          <li data-ar="لا توجد مقابلة رسمية، لكن بعض الجامعات قد تطلب مكالمة قصيرة." data-en="No formal interview, but some universities may request a brief call."></li>
+          <li data-ar="تابع بريدك الإلكتروني للحصول على قبول مبدئي ورسائل الجامعة." data-en="Monitor your email for preliminary admissions and university messages."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="🛂 ملف التأشيرة" data-en="🛂 Visa Folder"></strong>
+        <ul>
+          <li data-ar="جواز سفر ساري لمدة 3 أشهر بعد العودة." data-en="Passport valid for at least 3 months beyond return."></li>
+          <li data-ar="صورتان شمسيتان بمعايير رسمية." data-en="Two official passport-size photos."></li>
+          <li data-ar="خطاب القبول من الجامعة." data-en="Admission letter from university."></li>
+          <li data-ar="إثبات السكن (عقد إيجار أو حجز مؤكد)." data-en="Proof of accommodation (rental contract or reservation)."></li>
+          <li data-ar="حساب بنكي يحتوي على 6,500–7,000 يورو سنويًا أو دعم مالي من كفيل و أحد أفراد العائلة." data-en="Bank account with €6,500–7,000/year and financial support from a sponsor or family member."></li>
+          <li data-ar="تأمين صحي دولي." data-en="International health insurance."></li>
+          <li data-ar="تذكرة طيران أو خطة سفر." data-en="Flight ticket or travel plan."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💶 تكاليف المعيشة" data-en="💶 Living Costs"></strong>
+        <ul>
+          <li data-ar="روما / ميلانو: 900–1100 € شهريًا." data-en="Rome / Milan: €900–1100 per month."></li>
+          <li data-ar="مدن أخرى كفلورنسا وتورينو وبولونيا: 700–900 € شهريًا." data-en="Other cities like Florence, Turin, Bologna: €700–900/month."></li>
+          <li data-ar="تشمل السكن، طعام، نقل، تأمين، ولوازم الدراسة." data-en="Includes housing, food, transport, insurance, study materials."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💡 نصائح لك" data-en="💡 Tips for You"></strong>
+        <ul>
+          <li data-ar="قدّم على منحة DSU أو على تخفيض الرسوم عبر ISEE." data-en="Apply for DSU scholarship or fee reduction via ISEE."></li>
+          <li data-ar="ترجم مستنداتك ترجمة رسمية إلى الإيطالية." data-en="Translate your documents officially into Italian."></li>
+          <li data-ar="ابدأ التحضير في وقت مبكر، خاصة في المدن الكبرى." data-en="Start early, especially for major cities."></li>
+          <li data-ar="اتصل بالجامعة للاستفسارات المباشرة." data-en="Reach out to the university for direct inquiries."></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+     <div class="dest-card left germany-card">
+  <div class="card-header">
+    <img src="GR.png" alt="Germany Flag">
+    <span data-ar="ألمانيا" data-en="Germany">ألمانيا</span>
+    <span class="card-toggle-icon">▼</span>
+  </div>
+  <div class="card-content lang-section">
+    <ul class="bullet-list">
+      <li>
+        <strong data-ar="📘 كيفية التقديم إلى الجامعات" data-en="📘 How to Apply to Universities"></strong>
+        <ul>
+          <li data-ar="التسجيل عبر منصة uni-assist أو من خلال موقع الجامعة مباشرة." data-en="Apply via uni-assist platform or directly through the university website."></li>
+          <li data-ar="رفع شهادة البكالوريا، كشف النقاط، سيرة ذاتية، ورسالة دافع." data-en="Upload diploma, transcripts, CV, and motivation letter."></li>
+          <li data-ar="شهادة إثبات اللغة حسب لغة التدريس (ألمانية أو إنجليزية)." data-en="Language certificate depending on the program (German or English)."></li>
+          <li data-ar="البرامج الألمانية تتطلب مستوى B2 على الأقل (TestDaF, DSH, Goethe)." data-en="German-taught programs require B2+ (TestDaF, DSH, Goethe)."></li>
+          <li data-ar="البرامج الإنجليزية تقبل TOEFL أو IELTS." data-en="English-taught programs accept TOEFL or IELTS."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="📝 المقابلة والمتابعة" data-en="📝 Interview & Follow-up"></strong>
+        <ul>
+          <li data-ar="لا توجد مقابلة مطلوبة عادة، لكن بعض الجامعات قد تطلب مكالمة فيديو." data-en="No interview is usually required, but some universities may request a video call."></li>
+          <li data-ar="الجامعة قد تطلب إرسال مستندات أصلية بعد القبول." data-en="Universities may request original documents after acceptance."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="🛂 ملف التأشيرة" data-en="🛂 Visa Folder"></strong>
+        <ul>
+          <li data-ar="جواز سفر ساري وصورتان شمسيتان بمعايير السفارة." data-en="Valid passport and two biometric photos."></li>
+          <li data-ar="خطاب القبول الجامعي النهائي أو المشروط." data-en="Final or conditional university admission letter."></li>
+          <li data-ar="شهادة لغة مطابقة للبرنامج (B2 للألمانية، أو IELTS/TOEFL للإنجليزية)." data-en="Language certificate matching program (B2 for German, IELTS/TOEFL for English)."></li>
+          <li data-ar="إثبات تمويل (حساب مغلق بقيمة 11,208 € أو منحة دراسية)." data-en="Proof of funds (€11,208 blocked account or scholarship)."></li>
+          <li data-ar="إثبات السكن المؤقت." data-en="Proof of temporary accommodation."></li>
+          <li data-ar="تأمين صحي للسفر والدخول." data-en="Travel health insurance for entry."></li>
+          <li data-ar="سيرة ذاتية ورسالة دافع." data-en="CV and motivation letter."></li>
+          <li data-ar="نسخة من جميع الوثائق + استمارة التأشيرة." data-en="Copies of all documents + visa application form."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💶 تكاليف المعيشة" data-en="💶 Living Costs"></strong>
+        <ul>
+          <li data-ar="برلين / ميونيخ: 850–1100 € شهريًا." data-en="Berlin / Munich: €850–1100 per month."></li>
+          <li data-ar="مدن مثل لايبزيغ وكاسل: 650–800 € شهريًا." data-en="Cities like Leipzig and Kassel: €650–800/month."></li>
+          <li data-ar="تشمل: الإيجار، الطعام، التأمين، النقل العام." data-en="Includes: rent, food, insurance, public transport."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💡 نصائح لك" data-en="💡 Tips for You"></strong>
+        <ul>
+          <li data-ar="ابدأ التحضير مبكرًا واطلع على متطلبات كل جامعة." data-en="Start early and review each university’s requirements carefully."></li>
+          <li data-ar="استخدم موقع DAAD للبحث عن منح وبرامج." data-en="Use DAAD.de to search for scholarships and programs."></li>
+          <li data-ar="اختر مدينة تناسب ميزانيتك ونمط حياتك." data-en="Choose a city that fits your budget and lifestyle."></li>
+          <li data-ar="ترجم مستنداتك ترجمة ألمانية رسمية." data-en="Translate your documents officially into German."></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+    
+
+</div>
+
+    <div class="right-column">
+      <div class="dest-card right turkey-card">
+        <div class="card-header">
+          <img src="TR.png" alt="Turkey Flag">
+          <span data-ar="تركيا" data-en="Turkey">تركيا</span>
+          <span class="card-toggle-icon">▼</span>
+        </div>
+        <div class="card-content lang-section">
+    <ul class="bullet-list">
+
+      <li>
+        <strong data-ar="📘 كيفية التقديم إلى الجامعات" data-en="📘 How to Apply to Universities"></strong>
+        <ul>
+          <li data-ar="التسجيل عبر بوابة YÖK أو موقع الجامعة أو عبر منحة Türkiye." data-en="Apply via YÖK system, university website, or Türkiye Scholarships portal."></li>
+          <li data-ar="تحميل شهادة البكالوريا، كشف النقاط، سيرة ذاتية، ورسالة دافع." data-en="Upload diploma, transcript, CV, and motivation letter."></li>
+          <li data-ar="بعض الجامعات تطلب شهادة YÖS أو SAT." data-en="Some universities require YÖS or SAT scores."></li>
+          <li data-ar="شهادة لغة: TÖMER (لبرامج التركية) أو IELTS/TOEFL (للإنجليزية)." data-en="Language proof: TÖMER for Turkish or IELTS/TOEFL for English programs."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="📝 المقابلة والمتابعة" data-en="📝 Interview & Follow-up"></strong>
+        <ul>
+          <li data-ar="لا توجد مقابلة رسمية، لكن بعض الجامعات قد تطلب مقابلة قصيرة." data-en="No formal interview, though some universities may request a short one."></li>
+          <li data-ar="يتم إرسال خطاب القبول أو رسالة المنحة بعد القبول." data-en="You will receive the admission or scholarship letter after acceptance."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="🛂 ملف التأشيرة" data-en="🛂 Visa Folder"></strong>
+        <ul>
+          <li data-ar="خطاب القبول الجامعي أو رسالة منحة Türkiye." data-en="University admission letter or Türkiye Scholarship letter."></li>
+          <li data-ar="جواز سفر ساري + صورتان شمسيتان." data-en="Valid passport + two official ID photos."></li>
+          <li data-ar="نموذج طلب تأشيرة الطالب." data-en="Student visa application form."></li>
+          <li data-ar="تأمين صحي دولي." data-en="International health insurance."></li>
+          <li data-ar="حساب بنكي يحتوي على 5,000–6,000 يورو و دعم مالي من كفيل أو أحد أفراد العائلة." data-en="Bank account with €5,000–6,000 and a financial support from a sponsor or family member."></li>
+          <li data-ar="إثبات السكن المؤقت (حجز أو عقد إيجار)." data-en="Temporary accommodation proof (reservation or rental contract)."></li>
+          <li data-ar="تذكرة طيران أو خطة سفر." data-en="Flight ticket or travel plan."></li>
+          <li data-ar="نسخ من المستندات + ترجمة تركية رسمية إذا طلبت." data-en="Copies of documents + official Turkish translations if required."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💶 تكاليف المعيشة" data-en="💶 Living Costs"></strong>
+        <ul>
+          <li data-ar="إسطنبول / أنقرة: 500–700 € شهريًا." data-en="Istanbul / Ankara: €500–700/month."></li>
+          <li data-ar="قونية / أضنة / إزمير: 350–500 € شهريًا." data-en="Konya / Adana / Izmir: €350–500/month."></li>
+          <li data-ar="تشمل: السكن، الطعام، النقل، التأمين، ولوازم الدراسة." data-en="Covers: housing, food, transport, insurance, and study supplies."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💡 نصائح لك" data-en="💡 Tips for You"></strong>
+        <ul>
+          <li data-ar="قدّم عبر منحة Türkiye للحصول على تمويل كامل." data-en="Apply via Türkiye Scholarships for full funding."></li>
+          <li data-ar="استفسر عن لغة البرنامج (تركية أو إنجليزية)." data-en="Check if your program is in Turkish or English."></li>
+          <li data-ar="ترجم مستنداتك إلى اللغة التركية عند الطلب." data-en="Translate your documents into Turkish if required."></li>
+          <li data-ar="تابع بريدك وموقع الجامعة باستمرار بعد التقديم." data-en="Regularly check your email and university portal after applying."></li>
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+      <div class="dest-card right russia-card">
+        <div class="card-header">
+          <img src="RS.png" alt="Russia Flag">
+          <span data-ar="روسيا" data-en="Russia">روسيا</span>
+          <span class="card-toggle-icon">▼</span>
+        </div>
+         <div class="card-content lang-section">
+    <ul class="bullet-list">
+
+      <li>
+        <strong data-ar="🎓 منحة الحكومة الروسية" data-en="🎓 Russian Government Scholarship"></strong>
+        <ul>
+          <li data-ar="متاحة للجزائريين عبر education-in-russia.com." data-en="Available for Algerians via education-in-russia.com."></li>
+          <li data-ar="اختر 6 جامعات، وارفع شهادة البكالوريا، السيرة الذاتية، صورة، ورسالة دافع." data-en="Choose 6 universities and upload diploma, CV, photo, and motivation letter."></li>
+          <li data-ar="إذا تم قبولك، تُمنح سنة تحضيرية مجانية لتعلم اللغة الروسية ومواد التخصص." data-en="If selected, you get a free prep year to learn Russian and core subjects."></li>
+        </ul>
+      </li>
+
+      <li>
+         <strong data-ar="🏫 الدراسة بدون منحة (تمويل ذاتي)" data-en="🏫 Self-Funded Study Option"></strong>
+        <ul>
+          <li data-ar="اختر جامعة، تواصل معها مباشرة أو عبر وسطاء معتمدين." data-en="Choose a university and contact them directly or via authorized agencies."></li>
+          <li data-ar="قد تحتاج إلى سنة تحضيرية مدفوعة لتعلم اللغة الروسية." data-en="May require a paid preparatory year to learn Russian."></li>
+          <li data-ar="التخصصات المتوفرة: الطب، الهندسة، الإعلام، التكنولوجيا." data-en="Available fields: medicine, engineering, media, technology."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="🛂 ملف التأشيرة" data-en="🛂 Visa Documents"></strong>
+        <ul>
+          <li data-ar="دعوة رسمية من الجامعة أو وزارة التعليم." data-en="Official invitation from university or Ministry of Education."></li>
+          <li data-ar="جواز سفر ساري + صورتان شمسيتان." data-en="Valid passport + two ID photos."></li>
+          <li data-ar="استمارة طلب تأشيرة كاملة." data-en="Completed visa application form."></li>
+          <li data-ar="شهادة طبية + تحليل HIV." data-en="Medical certificate + HIV test result."></li>
+          <li data-ar="تأمين صحي دولي." data-en="International health insurance."></li>
+          <li data-ar="تذكرة طيران أو خطة سفر مبدئية." data-en="Initial flight reservation or itinerary."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💶 تكاليف المعيشة" data-en="💶 Living Costs"></strong>
+        <ul>
+          <li data-ar="موسكو / سانت بطرسبرغ: 400–600 يورو شهريًا." data-en="Moscow / St. Petersburg: €400–600/month."></li>
+          <li data-ar="مدن مثل كازان، سامارا: 250–400 يورو شهريًا." data-en="Cities like Kazan, Samara: €250–400/month."></li>
+          <li data-ar="تشمل السكن، الطعام، النقل، الإنترنت." data-en="Covers housing, food, transport, internet."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💡 نصائح مهمة" data-en="💡 Useful Tips"></strong>
+        <ul>
+          <li data-ar="قدّم على المنحة قبل نهاية ديسمبر." data-en="Apply for the scholarship before the end of December."></li>
+          <li data-ar="ركّز على رسالة الدافع — عنصر حاسم في القبول." data-en="Your motivation letter is a key factor for selection."></li>
+          <li data-ar="إذا كنت تموّل نفسك، استفسر عن رسوم السنة التحضيرية." data-en="If self-funded, ask about the cost of the preparatory year."></li>
+          <li data-ar="جهّز نسخًا مترجمة للوثائق إلى الروسية." data-en="Prepare officially translated documents in Russian."></li>
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+      <div class="dest-card right china-card">
+        <div class="card-header">
+          <img src="CH.png" alt="China Flag">
+          <span data-ar="الصين" data-en="China">الصين</span>
+          <span class="card-toggle-icon">▼</span>
+        </div>
+         <div class="card-content lang-section">
+    <ul class="bullet-list">
+      <li>
+        <strong data-ar="🎓 منحة الحكومة الصينية (CGS)" data-en="🎓 Chinese Government Scholarship (CGS)"></strong>
+        <ul>
+          <li data-ar="تغطي المنحة: الرسوم الدراسية بالكامل، سكن جامعي مجاني، تأمين صحي، وراتب شهري." data-en="Covers full tuition, free dormitory, health insurance, and monthly stipend."></li>
+          <li data-ar="تشمل سنة تحضيرية مجانية لتعلم اللغة الصينية إن لزم الأمر." data-en="Includes free preparatory year to study Chinese if required."></li>
+          <li data-ar="برامج البكالوريوس غالبًا بالصينية، وبرامج الماستر والدكتوراه قد تكون بالإنجليزية." data-en="Bachelor programs are mostly in Chinese; Master’s/PhD often available in English."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="📝 كيفية التقديم للمنحة" data-en="📝 How to Apply for the Scholarship"></strong>
+        <ul>
+          <li data-ar="عبر السفارة الصينية في الجزائر أو عبر بوابة CSC (campuschina.org)." data-en="Apply through the Chinese Embassy in Algeria or via CSC portal (campuschina.org)."></li>
+          <li data-ar="الوثائق: جواز سفر، كشف النقاط، خطة الدراسة، فحوصات طبية، رسائل توصية، شهادة لغة." data-en="Required: passport, transcripts, study plan, medical checks, recommendation letters, language certificate."></li>
+          <li data-ar="فترة التقديم من يناير إلى مارس." data-en="Application window: January to March."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="🏫 الدراسة بدون منحة (تمويل ذاتي)" data-en="🏫 Self-Funded Study Option"></strong>
+        <ul>
+          <li data-ar="رسوم الدراسة تتراوح بين 2000–4000 دولار سنويًا حسب التخصص." data-en="Tuition costs range from $2,000–4,000/year depending on major."></li>
+          <li data-ar="يمكن التقديم مباشرة عبر موقع الجامعة الدولية." data-en="Apply directly via the university’s international admissions site."></li>
+          <li data-ar="برامج باللغة الإنجليزية متاحة في الهندسة، الأعمال، والعلوم." data-en="English-taught programs available in engineering, business, and sciences."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="🛂 التأشيرة والإجراءات" data-en="🛂 Visa & Procedures"></strong>
+        <ul>
+          <li data-ar="تأشيرة X1 للدراسة الطويلة (أكثر من 180 يوم)." data-en="X1 visa is required for studies longer than 180 days."></li>
+          <li data-ar="مطلوب: خطاب قبول، نموذج JW202، فحص طبي، صورة شخصية، جواز سفر." data-en="Required: admission letter, JW202 form, medical exam, photo, passport."></li>
+          <li data-ar="تحويل التأشيرة إلى إقامة خلال 30 يومًا من الوصول." data-en="Convert visa to residence permit within 30 days of arrival."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💶 تكاليف المعيشة" data-en="💶 Living Costs"></strong>
+        <ul>
+          <li data-ar="بكين/شنغهاي: 500–700 دولار شهريًا." data-en="Beijing/Shanghai: $500–700/month."></li>
+          <li data-ar="ووهان/نانجينغ: 350–500 دولار شهريًا." data-en="Wuhan/Nanjing: $350–500/month."></li>
+          <li data-ar="السكن الجامعي غالبًا مجاني أو مدعوم." data-en="Dormitories are usually free or subsidized."></li>
+        </ul>
+      </li>
+
+      <li>
+        <strong data-ar="💡 نصائح لك" data-en="💡 Tips for You"></strong>
+        <ul>
+          <li data-ar="ابدأ التقديم مبكرًا لأن المنحة تنافسية." data-en="Apply early — the scholarship is competitive."></li>
+          <li data-ar="حضّر شهادة HSK إن كنت تدرس بالصينية." data-en="Prepare HSK certificate if your program is in Chinese."></li>
+          <li data-ar="أفضل الجامعات للجزائريين تشمل: Wuhan، BLCU، Central China Normal." data-en="Top universities for Algerians: Wuhan, BLCU, Central China Normal."></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+  </div>
+</main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links-wrapper">
+        <a href="about.html" class="footer-link" data-ar="حولنا" data-en="About Us">حولنا</a>
+        <a href="userpolicy.html" class="footer-link" data-ar="سياسة المستخدم" data-en="User Policy">سياسة المستخدم</a>
+      </div>
+      <div class="copyright">
+        © <span id="year"></span> Study Horizons Algeria. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+   </main>
+
+
+  <script>
+    const yearSpan = document.getElementById("year");
+    yearSpan.textContent = new Date().getFullYear();
+
+    const toggleLangBtn = document.getElementById("lang-toggle");
+    const toggleModeBtn = document.getElementById("mode-toggle");
+
+    let currentLang = "ar";
+    let currentMode = "dark";
+
+    function getParamsFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        lang: params.get("lang") === "en" ? "en" : "ar",
+        mode: params.get("mode") === "light" ? "light" : "dark"
+      };
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      toggleLangBtn.textContent = lang === "ar" ? "EN" : "AR";
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.title = lang === "ar"
+        ? "Study Horizons Algeria - الوجهات"
+        : "Study Horizons Algeria - Destinations";
+
+      document.querySelectorAll("[data-ar]").forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+    }
+
+    function applyMode(mode) {
+      currentMode = mode;
+      document.body.classList.toggle("dark-mode", mode === "dark");
+      toggleModeBtn.textContent = mode === "dark" ? "☀️" : "🌙";
+    }
+
+    function updateNavLinks(lang, mode) {
+      document.querySelectorAll("nav a[href], .footer-link[href]").forEach(link => {
+        const href = link.getAttribute("href").split("?")[0];
+        link.setAttribute("href", `${href}?lang=${lang}&mode=${mode}`);
+      });
+    }
+
+    toggleLangBtn.addEventListener("click", () => {
+      const newLang = currentLang === "ar" ? "en" : "ar";
+      applyLanguage(newLang);
+      updateNavLinks(newLang, currentMode);
+    });
+
+    toggleModeBtn.addEventListener("click", () => {
+      const newMode = currentMode === "dark" ? "light" : "dark";
+      applyMode(newMode);
+      updateNavLinks(currentLang, newMode);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const { lang, mode } = getParamsFromURL();
+      applyLanguage(lang);
+      applyMode(mode);
+      updateNavLinks(lang, mode);
+
+      document.querySelectorAll(".dest-card").forEach(card => {
+        const content = card.querySelector(".card-content");
+        const icon = card.querySelector(".card-toggle-icon");
+
+        card.addEventListener("click", () => {
+          const isOpen = card.classList.contains("open");
+          card.classList.toggle("open");
+
+          if (!isOpen) {
+            content.classList.add("expanded");
+            content.style.maxHeight = content.scrollHeight + "px";
+            if (icon) icon.textContent = "▲";
+          } else {
+            content.style.maxHeight = 0;
+            content.classList.remove("expanded");
+            if (icon) icon.textContent = "▼";
+          }
+        });
+      });
+    });
+
+     const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+  if (isMobile) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #101827;
+      color: white;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      text-align: center;
+      padding: 2rem;
+    `;
+    overlay.textContent = 'This website is only accessible on desktop devices';
+    document.body.innerHTML = '';
+    document.body.appendChild(overlay);
+  }
+  
+  </script>
+</body>
+</html>

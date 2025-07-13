@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Horizons Algeria - تواصل معنا</title>
+  <link rel="icon" href="logoS.png" type="image/png" />
+  <link rel="icon" href="logoS.png" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="32x32" href="logoS-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="logoS-16x16.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --logo-blue: #50A1CD;
+      --logo-orange: #f7921e;
+      --white: #ffffff;
+      --text-dark: #333;
+      --text-light: #fff;
+      --background-dark: #101827;
+      --text-dark-mode: #e0e0e0;
+      --header-gradient-light: linear-gradient(to right, #50A1CD 180px, #2C4C8D 80%, #1A3D7C);
+      --header-gradient-dark: linear-gradient(to right, #50A1CD 180px, #162B4B 80%, #0e1f33);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body.dark-mode {
+      color: var(--text-dark-mode);
+    }
+
+    .page-gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      background-size: 400% 400%;
+      animation: gradient-animation 4s ease infinite;
+      pointer-events: none;
+    }
+
+    body.dark-mode .page-gradient-bg {
+      background-image: linear-gradient(135deg, #040a17, #081839, #030e24);
+    }
+
+    body:not(.dark-mode) .page-gradient-bg {
+      background-image: linear-gradient(135deg, #e4e4e4, #ffffff, #c1c1c1);
+    }
+
+    @keyframes gradient-animation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header, footer {
+      background: var(--header-gradient-light);
+      color: var(--text-light);
+      padding: 15px 5%;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    body.dark-mode header,
+    body.dark-mode footer {
+      background: var(--header-gradient-dark);
+    }
+
+    .header-container, .footer-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      height: 100px;
+      max-width: 180px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover { transform: scale(1.05); }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    html[dir="rtl"] .logo { order: 2; }
+    html[dir="rtl"] nav { order: 1; }
+    html[dir="ltr"] .logo { order: 1; }
+    html[dir="ltr"] nav { order: 2; }
+
+    nav a, .footer-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 6px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover, .footer-link:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    nav a.active::after, .footer-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--logo-orange);
+      border-radius: 2px;
+    }
+
+    #mode-toggle, #lang-toggle {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 10px 20px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    #mode-toggle:hover, #lang-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+      padding: 5rem 5%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-box {
+      background-color:rgba(16, 24, 39, 0.4);
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      animation: fadeInUp 1s ease-in-out;
+      border-top: 4px solid var(--logo-orange);
+    }
+
+    body:not(.dark-mode) .contact-box {
+      background-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08)
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-box p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-link i {
+      font-size: 1.2rem;
+      color: var(--logo-orange);
+    }
+
+    .contact-link a {
+      color: var(--logo-orange);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-link a:hover {
+      color: var(--logo-blue);
+    }
+
+    .footer-links-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      text-align: center;
+      width: 100%;
+    }
+
+    html[dir="rtl"] .footer-links-wrapper { flex-direction: row-reverse; }
+    html[dir="ltr"] .footer-links-wrapper { flex-direction: row; }
+
+    .copyright {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+      opacity: 0.75;
+      direction: ltr;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 768px) {
+      .contact-box {
+        padding: 2rem 1.5rem;
+      }
+    }
+    img[src="student.png"],
+img[src="agency.png"] {
+  transition: transform 0.3s ease;
+}
+
+img[src="student.png"]:hover,
+img[src="agency.png"]:hover {
+  transform: scale(1.15);
+}
+
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="page-gradient-bg"></div>
+
+  <header>
+    <div class="header-container">
+      <img src="logoXS.png" alt="Study Horizons Algeria Logo" class="logo">
+      <nav>
+        <a href="index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+        <a href="destinations.html" data-ar="الوجهات" data-en="Destinations">الوجهات</a>
+        <a href="recommendations.html" data-ar="التوصيات" data-en="Recommendations">التوصيات</a>
+        <a href="contact.html" class="active" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</a>
+        <button id="lang-toggle" aria-label="Switch Language">EN</button>
+        <button id="mode-toggle" aria-label="Toggle Dark Mode">☀️</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="contact-box">
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+    <img src="student.png" alt="Student Icon" style="width: 64px; height: 64px; margin-top: -12px;">
+    <h2 data-ar="للطلاب" data-en="For Students">للطلاب</h2>
+  </div>
+  <p data-ar="يمكنك التواصل معنا :"
+     data-en="You can contact us to :">
+  </p>
+  <p data-ar="• لطرح الأسئلة، طلب التوجيه، أو الاستفسار عن الوجهات والإجراءات الدراسية."
+     data-en="• ask questions, seek guidance, or clarify study destinations and procedures.">
+  </p>
+  <p data-ar="• لتقديم المشورة والإجابة على استفساراتك حول اختيار الوجهة المناسبة والشركاء الموثوقين."
+     data-en="• to advise and support you in choosing the right destination and trusted partners.">
+  </p>
+  <div class="contact-link" dir="ltr" style="justify-content: center; font-size: 1.2rem; margin-top: 1.5rem;">
+  <i class="fab fa-instagram" style="font-size: 1.4rem;"></i>
+  <a href="https://www.instagram.com/studyhorizonsalgeria" style="display: flex; align-items: center; gap: 10px;" >
+     <span>@studyhorizonsalgeria</span>
+  </a>
+</div>
+</div>
+
+ <div class="contact-box contact-stripe-top">
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+   <img src="agency.png" alt="Agency Icon" style="width: 64px; height: 64px; margin-top: -12px;">
+    <h2 data-ar="للوكالات" data-en="For Agencies">للوكالات</h2>
+  </div>
+  <p data-ar="نرحب بتواصلكم معنا :"
+     data-en="We welcome your inquiries :">
+  
+  </p>
+  <p data-ar="• بخصوص التعاون في مجال الإرشاد الأكاديمي أو الترويج التعليمي."
+     data-en="• regarding collaboration in academic guidance or promotion.">
+  
+  </p>
+  <p data-ar="• بخصوص بناء شراكات مهنية قوية تتماشى مع مهمتنا في دعم الطلاب الجزائريين."
+     data-en="• regarding building strong professional partnerships aligned with our mission to support Algerian students.">
+    
+  </p>
+ <div class="contact-link" dir="ltr" style="justify-content: center; font-size: 1.2rem; margin-top: 1.5rem;">
+    <i class="fas fa-envelope" style="font-size: 1.4rem;"></i>
+    <a href="mailto:studyhorizonsalgeria@gmail.com" style="display: flex; align-items: center; gap: 10px;" >
+      <span>studyhorizonsalgeria@gmail.com</span></a>
+  </div>
+</div>
+
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links-wrapper">
+        <a href="about.html" class="footer-link" data-ar="حولنا" data-en="About Us">حولنا</a>
+        <a href="userpolicy.html" class="footer-link" data-ar="سياسة المستخدم" data-en="User Policy">سياسة المستخدم</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © <span id="year"></span> Study Horizons Algeria. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const yearSpan = document.getElementById('year');
+    const toggleModeBtn = document.getElementById('mode-toggle');
+    const toggleLangBtn = document.getElementById('lang-toggle');
+
+    yearSpan.textContent = new Date().getFullYear();
+
+    let currentLang = 'ar';
+    let currentMode = 'dark';
+
+    function getParamsFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        lang: params.get('lang') || 'ar',
+        mode: params.get('mode') || 'dark'
+      };
+    }
+
+    function updateNavLinks(lang, mode) {
+      document.querySelectorAll('nav a[href], .footer-link[href]').forEach(link => {
+        const href = link.getAttribute('href').split('?')[0];
+        link.setAttribute('href', `${href}?lang=${lang}&mode=${mode}`);
+      });
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      toggleLangBtn.textContent = lang === 'ar' ? 'EN' : 'AR';
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.title = lang === 'ar'
+        ? 'Study Horizons Algeria - تواصل معنا'
+        : 'Study Horizons Algeria - Contact Us';
+
+      document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+    }
+
+    function applyMode(mode) {
+      currentMode = mode;
+      document.body.classList.toggle('dark-mode', mode === 'dark');
+      toggleModeBtn.textContent = mode === 'dark' ? '☀️' : '🌙';
+    }
+
+    toggleLangBtn.addEventListener('click', () => {
+      const newLang = currentLang === 'ar' ? 'en' : 'ar';
+      applyLanguage(newLang);
+      updateNavLinks(newLang, currentMode);
+    });
+
+    toggleModeBtn.addEventListener('click', () => {
+      const newMode = currentMode === 'dark' ? 'light' : 'dark';
+      applyMode(newMode);
+      updateNavLinks(currentLang, newMode);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const { lang, mode } = getParamsFromURL();
+      applyLanguage(lang);
+      applyMode(mode);
+      updateNavLinks(lang, mode);
+    });
+
+     const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+  if (isMobile) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #101827;
+      color: white;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      text-align: center;
+      padding: 2rem;
+    `;
+    overlay.textContent = 'This website is only accessible on desktop devices';
+    document.body.innerHTML = '';
+    document.body.appendChild(overlay);
+  }
+  
+  </script>
+</body>
+</html>

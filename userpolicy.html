@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Horizons Algeria - سياسة المستخدم</title>
+  <link rel="icon" href="logoS.png" type="image/png" />
+  <link rel="icon" href="logoS.png" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="32x32" href="logoS-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="logoS-16x16.png" />
+  <style>
+    :root {
+      --logo-blue: #50A1CD;
+      --logo-orange: #f7921e;
+      --white: #ffffff;
+      --text-dark: #333;
+      --text-light: #fff;
+      --background-light: #ffffff;
+      --background-dark: #101827;
+      --text-dark-mode: #e0e0e0;
+      --header-gradient-light: linear-gradient(to right, #50A1CD 180px, #2C4C8D 80%, #1A3D7C);
+      --header-gradient-dark: linear-gradient(to right, #50A1CD 180px, #162B4B 80%, #0e1f33);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      transition: background 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.dark-mode {
+      color: var(--text-dark-mode);
+    }
+
+    .page-gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      background-size: 400% 400%;
+      animation: gradient-animation 4s ease infinite;
+      pointer-events: none;
+    }
+
+    body.dark-mode .page-gradient-bg {
+      background-image: linear-gradient(135deg, #040a17, #081839, #030e24);
+    }
+
+    body:not(.dark-mode) .page-gradient-bg {
+      background-image: linear-gradient(135deg, #e4e4e4, #ffffff, #c1c1c1);
+    }
+
+    @keyframes gradient-animation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header, footer {
+      background: var(--header-gradient-light);
+      color: var(--text-light);
+      padding: 15px 5%;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode header,
+    body.dark-mode footer {
+      background: var(--header-gradient-dark);
+    }
+
+    .header-container, .footer-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      height: 100px;
+      max-width: 180px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover { transform: scale(1.05); }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    html[dir="rtl"] .logo { order: 2; }
+    html[dir="rtl"] nav { order: 1; }
+    html[dir="ltr"] .logo { order: 1; }
+    html[dir="ltr"] nav { order: 2; }
+
+    nav a, .footer-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover, .footer-link:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    nav a.active::after, .footer-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--logo-orange);
+      border-radius: 2px;
+    }
+
+    #mode-toggle, #lang-toggle {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 10px 20px;
+      border-radius: 6px;
+      line-height: 1.5;
+      transition: all 0.3s ease;
+    }
+
+    #mode-toggle:hover, #lang-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    main {
+  position: relative;
+  padding: 4rem 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 2.1;
+  font-size: 1.2rem;
+  text-align: justify;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 1s ease-in-out;
+  background: rgba(16, 24, 39, 0.4);
+  z-index: 1;
+  overflow: hidden;
+}
+
+main::before,
+main::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 2;
+}
+
+main::before{
+  left: 0;
+  background:  linear-gradient(to top, #f7921e00 1%, #f7921ec4 20%, #f7921e00 99%);
+  width: 1.99px;
+}
+
+  
+
+main::after {
+  right: 0;
+  background:  linear-gradient(to bottom, #f7921e00 1%, #f7921ec4 20%, #f7921e00 99%);
+  width: 2px;
+}
+
+    body:not(.dark-mode) main {
+      background-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .policy-content {
+      margin-bottom: 2rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .footer-links-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      text-align: center;
+      width: 100%;
+    }
+
+    html[dir="rtl"] .footer-links-wrapper { flex-direction: row-reverse; }
+    html[dir="ltr"] .footer-links-wrapper { flex-direction: row; }
+
+    .copyright {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+      opacity: 0.75;
+      direction: ltr;
+      color: var(--text-light);
+    }
+
+    header, footer {
+  position: relative;
+  z-index: 2;
+}
+
+   main {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+   
+
+
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="page-gradient-bg"></div>
+
+  <header>
+    <div class="header-container">
+      <img src="logoXS.png" alt="Study Horizons Algeria Logo" class="logo">
+      <nav>
+        <a href="index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+        <a href="destinations.html" data-ar="الوجهات" data-en="Destinations">الوجهات</a>
+        <a href="recommendations.html" data-ar="التوصيات" data-en="Recommendations">التوصيات</a>
+        <a href="contact.html" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</a>
+        <button id="lang-toggle" aria-label="Switch Language">EN</button>
+        <button id="mode-toggle" aria-label="Toggle Dark Mode">☀️</button>
+      </nav>
+    </div>
+  </header>
+
+  <main >
+    <h1 data-ar="سياسة المستخدم" data-en="User Policy">سياسة المستخدم</h1>
+     <div class="policy-content" data-en lang="ar" dir="rtl" style="display:none;">
+  <p>
+    <li>دخولك إلى هذا الموقع أو استخدامك لأي من محتوياته يُعتبر موافقة على سياسة الاستخدام الموضحة هنا.<br></li>
+    <li>الموقع يهدف إلى تقديم معلومات وإرشادات مفيدة للطلبة الجزائريين الحاصلين على شهادة البكالوريا والراغبين في استكشاف فرص الدراسة في الخارج.<br></li>
+    <li>نسعى لتوفير معلومات دقيقة ومحدثة قدر الإمكان، مع الأخذ بعين الاعتبار أن بعض التفاصيل قد تتغير مع الوقت.<br></li>
+    <li>نقدم محتوى تعريفيًا وترويجيًا عن وكالات متخصصة في مجال التوجيه والدراسة الدولية بهدف التسهيل على الزوار.<br></li>
+    <li>الموقع لا يتدخل بشكل مباشر ولا يعمل كوسيط في أي تعاقد بين المستخدم وأي وكالة خارجية.<br></li>
+    <li>نحن لا نقدم خدمات مباشرة، وأي تواصل مع أطراف خارجية يتم حسب تقدير المستخدم ومسؤوليته.<br></li>
+    <li>لا نتدخل في تفاصيل الإجراءات أو التكاليف أو العقود التي تُبرم خارج إطار الموقع.<br></li>
+    <li>لا نقدم وعودًا أو ضمانات قانونية بشأن الخدمات التي تقدمها الوكالات المذكورة.<br></li>
+    <li>باستخدامك لهذا الموقع، فأنت تقر بفهمك لطبيعته وتوافق على عدم تحميله مسؤولية أي نتائج ناتجة عن تعاملاتك مع جهات خارجية.<br></li>
+    <li>لا نقوم بجمع أي معلومات حساسة أو شخصية عن زوار الموقع.<br></li>
+    <li>نشجعك على مراجعة سياسة الاستخدام بين الحين والآخر، حيث قد نقوم بتحديثها بما يتماشى مع تطوير خدماتنا.</li>
+  </p>
+</div>
+
+    <div class="policy-content" data-en lang="en" dir="ltr" style="display:none;">
+  <p>
+    <li>By accessing or using this website, you agree to the usage policy outlined here.<br>
+    <li>The website aims to provide helpful information and guidance for Algerian students who hold a baccalaureate degree and are interested in exploring study opportunities abroad.<br></li>
+    <li>We strive to offer accurate and regularly updated information, while noting that some details may change over time.<br></li>
+    <li>We present introductory and promotional content about agencies specialized in international study and guidance, with the aim of assisting visitors.<br></li>
+    <li>The website does not intervene directly and does not act as a mediator in any contract between users and external agencies.<br></li>
+    <li>We do not offer services directly; any communication with third parties is at the user's own discretion and responsibility.<br></li>
+    <li>We do not interfere in any procedures, costs, or contracts agreed upon outside the scope of this website.<br></li>
+    <li>We do not make legal promises or guarantees regarding the services offered by the mentioned agencies.<br></li>
+    <li>By using this website, you acknowledge its nature and agree not to hold it accountable for any outcomes resulting from your interactions with external parties.<br></li>
+    <li>We do not collect any sensitive or personal information from site visitors.<br></li>
+    <li>We encourage you to review this usage policy from time to time, as it may be updated in line with service developments.</li>
+  </p>
+</div>
+
+  </main>
+
+    <footer>
+    <div class="footer-container">
+      <div class="footer-links-wrapper">
+        <a href="about.html" class="footer-link" data-ar="حولنا" data-en="About Us">حولنا</a>
+        <a href="userpolicy.html" class="footer-link active" data-ar="سياسة المستخدم" data-en="User Policy">سياسة المستخدم</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © <span id="year"></span> Study Horizons Algeria. All rights reserved.
+    </div>
+  </footer>
+
+   <script>
+    const yearSpan = document.getElementById('year');
+    const toggleModeBtn = document.getElementById('mode-toggle');
+    const toggleLangBtn = document.getElementById('lang-toggle');
+
+    yearSpan.textContent = new Date().getFullYear();
+
+    let currentLang = 'ar';
+    let currentMode = 'dark';
+
+    function getParamsFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        lang: params.get('lang') || document.documentElement.lang || 'ar',
+        mode: params.get('mode') || 'dark'
+      };
+    }
+
+    function updateNavLinks(lang, mode) {
+      document.querySelectorAll('nav a[href], .footer-link[href]').forEach(link => {
+        const href = link.getAttribute('href').split('?')[0];
+        if (href !== '#') {
+          link.setAttribute('href', `${href}?lang=${lang}&mode=${mode}`);
+        }
+      });
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      toggleLangBtn.textContent = lang === 'ar' ? 'EN' : 'AR';
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.title = lang === 'ar'
+        ? 'Study Horizons Algeria - سياسة المستخدم'
+        : 'Study Horizons Algeria - User Policy';
+
+      document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+
+      document.querySelectorAll('.policy-content').forEach(section => {
+        section.style.display = section.getAttribute('lang')?.toLowerCase() === lang.toLowerCase() ? 'block' : 'none';
+      });
+    }
+
+    function applyMode(mode) {
+      currentMode = mode;
+      if (mode === 'dark') {
+        document.body.classList.add('dark-mode');
+        toggleModeBtn.textContent = '☀️';
+      } else {
+        document.body.classList.remove('dark-mode');
+        toggleModeBtn.textContent = '🌙';
+      }
+    }
+
+    toggleLangBtn.addEventListener('click', () => {
+      const newLang = currentLang === 'ar' ? 'en' : 'ar';
+      applyLanguage(newLang);
+      updateNavLinks(newLang, currentMode);
+    });
+
+    toggleModeBtn.addEventListener('click', () => {
+      const newMode = currentMode === 'dark' ? 'light' : 'dark';
+      applyMode(newMode);
+      updateNavLinks(currentLang, newMode);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const { lang, mode } = getParamsFromURL();
+      applyLanguage(lang);
+      applyMode(mode);
+      updateNavLinks(lang, mode);
+    });
+  
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+  if (isMobile) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #101827;
+      color: white;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      text-align: center;
+      padding: 2rem;
+    `;
+    overlay.textContent = 'This website is only accessible on desktop devices';
+    document.body.innerHTML = '';
+    document.body.appendChild(overlay);
+  }
+</script>
+
+
+</body>
+</html>
